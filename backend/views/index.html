@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-gray-400 flex items-center justify-center min-h-screen">
+    <form
+      class="signup-form bg-black bg-opacity-80 text-white rounded-lg px-6 py-8 w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4"
+    >
+      <h1 class="font-bold text-2xl sm:text-3xl py-4">Sign Up</h1>
+      <label for="username">Enter your name: </label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        class="p-4 my-2 bg-gray-700 w-full rounded-md"
+        placeholder="Enter your name"
+        required
+      />
+      <br /><br />
+      <label for="email">Enter your email: </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        class="p-4 my-2 bg-gray-700 w-full rounded-md"
+        placeholder="Enter your email"
+        required
+      />
+      <br /><br />
+      <label for="password">Enter your password: </label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="p-4 my-2 bg-gray-700 w-full rounded-md"
+        placeholder="Enter your password"
+        required
+      />
+      <br /><br />
+      <button
+        id="signup"
+        class="p-4 my-4 text-white border-black bg-red-700 hover:bg-red-800 transition duration-200 w-full rounded-lg cursor-pointer"
+        type="submit"
+      >
+        SignUp
+      </button>
+      <p
+        id="toggle-form"
+        class="py-4 text-center cursor-pointer text-blue-400 hover:underline"
+      >
+        <a href="/login.html">Already have an account? Login here</a>
+      </p>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/signup.js"></script>
+  </body>
+</html>
