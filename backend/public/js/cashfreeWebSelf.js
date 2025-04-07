@@ -1,3 +1,4 @@
+const token = localStorage.getItem("token"); // or however you're storing it
 const cashfree = Cashfree({
   mode: "sandbox",
 });
@@ -8,19 +9,21 @@ document
     try {
       const response = await axios.post(
         "http://localhost:3000/payment/create-order",
+
         {
-          amount: 1,
+          amount: 10000,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
         }
       );
-      console.log(response);
-
-      const { paymentSessionId } = response.data;
-
+      const { paymentSessionId, orderId } = response.data;
       let checkoutOptions = {
         paymentSessionId: paymentSessionId,
         redirectTarget: "_self",
       };
-
       cashfree.checkout(checkoutOptions);
     } catch (error) {
       console.error("Error:", error);

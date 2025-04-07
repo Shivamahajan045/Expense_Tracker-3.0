@@ -11,6 +11,7 @@ const Expense = require("./models/expense");
 const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
 const paymentRouter = require("./routes/paymentRoutes");
+const leaderboardRouter = require("./routes/leaderBoard");
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "views")));
 app.use("/payment", paymentRouter);
+app.use("/premium", leaderboardRouter);
 
 //Root path
 app.get("/", (req, res) => {
@@ -45,11 +47,12 @@ app.use("/expense", expenseRouter);
 // Database Connection
 sequelize
   .sync({ force: false })
-  .then(() => {})
+  .then(() => {
+    console.log("Database connected...");
+    app.listen(port, () => {
+      console.log(`Server is listening to port: ${port}...`);
+    });
+  })
   .catch((err) => {
     console.log(err);
   });
-
-app.listen(port, () => {
-  console.log(`Server is listening to port: ${port}`);
-});

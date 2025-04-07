@@ -66,7 +66,17 @@ const getUser = async (req, res) => {
   }
 };
 
+const getUserStatus = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    res.status(200).json({ isPremium: user.isPremium });
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   createUser,
   getUser,
+  getUserStatus,
 };

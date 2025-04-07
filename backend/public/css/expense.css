@@ -1,0 +1,42 @@
+body {
+  background-color: #f0f4f8;
+  font-family: "Arial", sans-serif;
+}
+h1 {
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+.card {
+  border-radius: 15px;
+  padding: 30px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#buy-premium-btn {
+  position: absolute;
+  right: 110px;
+  top: 20px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: background-color 0.3s;
+}
+#buy-premium-btn:hover {
+  background-color: #00bfa6;
+  color: white;
+}
+#add {
+  border-radius: 10px;
+  margin-top: 20px;
+}
+#leaderboard-btn {
+  margin-top: 20px;
+}
+select,
+input {
+  border-radius: 10px;
+}
+.list-group-item {
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 15px;
+}

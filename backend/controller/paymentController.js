@@ -1,6 +1,6 @@
 const { Cashfree } = require("cashfree-pg");
 require("dotenv").config();
-
+const User = require("../models/user");
 Cashfree.XClientId = process.env.CASHFREE_KEY_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_KEY_SECRET;
 Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
@@ -18,18 +18,17 @@ exports.createOrder = async (req, res) => {
       order_currency: "INR",
       order_id: orderId,
       customer_details: {
-        customer_id: "12345", // You can use a random or fixed ID
-        customer_phone: "9999999999", // Provide a valid phone number
+        customer_id: "123456789",
+        customer_phone: "9999999999",
       },
       order_meta: {
-        return_url: `http://localhost:3000/payment/payment-status/${orderId}`,
+        return_url: `http://localhost:3000/payment/payment-status/${orderId}?token=${req.headers.authorization}`,
         payment_methods: "cc,upi,nb",
       },
       order_expiry_time: formattedExpiryDate,
     };
     const response = await Cashfree.PGCreateOrder("2025-01-01", request);
     const paymentSessionId = response.data.payment_session_id;
-
     res.status(200).json({ success: true, paymentSessionId, orderId });
   } catch (error) {
     console.error("Error creating order:", error.message);
@@ -42,7 +41,7 @@ exports.getPaymentStatus = async (req, res) => {
     const { orderId } = req.params;
     const response = await Cashfree.PGOrderFetchPayments("2025-01-01", orderId);
     const getOrderResponse = response.data;
-    let orderStatus;
+    let orderStatus; // Save premium status when payment is successful
 
     if (
       getOrderResponse.filter(
@@ -50,6 +49,7 @@ exports.getPaymentStatus = async (req, res) => {
       ).length > 0
     ) {
       orderStatus = "Success";
+      await User.update({ isPremium: true }, { where: { id: req.user.id } });
     } else if (
       getOrderResponse.filter(
         (transaction) => transaction.payment_status === "PENDING"
@@ -68,3 +68,55 @@ exports.getPaymentStatus = async (req, res) => {
       .json({ success: false, message: "Failed to fetch order status" });
   }
 };
+
+// exports.getPaymentStatus = async (req, res) => {
+//   try {
+//     const { orderId } = req.params;
+
+//     const today = new Date().toISOString().split("T")[0];
+
+//     const response = await Cashfree.PGOrderFetchPayments(today, orderId);
+
+//     const getOrderResponse = response.data;
+
+//     console.log("User ID:", req.user?.id);
+
+//     console.log("Payment response:", getOrderResponse);
+
+//     let orderStatus;
+
+//     if (
+//       getOrderResponse.some(
+//         (transaction) => transaction.payment_status === "SUCCESS"
+//       )
+//     ) {
+//       orderStatus = "Success";
+
+//       const [updatedRows] = await User.update(
+//         { isPremium: true },
+
+//         { where: { id: req.user.id } }
+//       );
+
+//       console.log("Updated rows:", updatedRows);
+//     } else if (
+//       getOrderResponse.some(
+//         (transaction) => transaction.payment_status === "PENDING"
+//       )
+//     ) {
+//       orderStatus = "Pending";
+//     } else {
+//       orderStatus = "Failure";
+//     }
+
+//     return res.status(200).json({ success: true, orderStatus });
+//   } catch (error) {
+//     console.error("Error fetching order status: ", error.message);
+
+//     return res
+
+//       .status(500)
+
+//       .json({ success: false, message: "Failed to fetch order status" });
+//   }
+// };

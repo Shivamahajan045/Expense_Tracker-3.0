@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,15 +11,38 @@
       crossorigin="anonymous"
     />
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <style>
+      #buy-premium-btn {
+        position: absolute;
+        right: 110px;
+        top: 20px;
+      }
+      body {
+        background-color: #e0f7fa;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
-      <button class="btn btn-outline-success mt-3 p-3" id="buy-premium-btn">
+      <button
+        class="btn btn-outline-info m-3 p-3 items-center"
+        id="buy-premium-btn"
+      >
         Buy Premium Membership
       </button>
     </div>
+    <div class="container">
+      <div id="premium-msg"></div>
+      <button
+        class="btn btn-sm text-white btn-primary mt-3 p-2"
+        id="leaderboard-btn"
+        style="display: none"
+      >
+        Show Leaderboard
+      </button>
+    </div>
     <div class="container mt-5">
-      <h1 class="text-center text-primary">Expense Application</h1>
+      <h1 class="text-center text-primary">Expense Application 2.0</h1>
       <div class="card shadow p-4 mx-auto">
         <form>
           <div class="mb-3">
@@ -74,6 +97,209 @@
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/expense.js"></script>
+    <script src="/js/cashfreeWebSelf.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Application 2.0</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <link rel="stylesheet" href="/css/expense.css" />
+    <style>
+      #leaderboard-list li {
+        font-size: 1.1rem;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <!--
+  <body>
+    <div class="container mt-4">
+      <button class="btn btn-outline-info" id="buy-premium-btn">
+        Buy Premium Membership
+      </button>
+      <h2
+        id="premium-msg"
+        class="text-center text-warning mt-4"
+        style="display: none"
+      >
+        🌟 You are a premium user now 🌟
+      </h2>
+     
+      <div class="flex">
+        <button
+          class="btn btn-primary mt-3 w-100"
+          id="leaderboard-btn"
+          style="display: none"
+        >
+          Show Leaderboard
+        </button>
+      </div>
+      
+      <div id="leaderboard-container" class="mt-3" style="display: none">
+        <h3 class="text-center text-success">🏆 Leaderboard</h3>
+        <ul id="leaderboard-list" class="list-group"></ul>
+      </div>
+      <h1 class="text-center text-primary">Expense Application 2.0</h1>
+      <div class="card mx-auto">
+        <form>
+          <div class="mb-3">
+            <label class="form-label" for="amount">Enter amount:</label>
+            <input
+              class="form-control"
+              type="number"
+              id="amount"
+              name="amount"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="description"
+              >Enter description:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="description"
+              name="description"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="category">Category:</label>
+            <select class="form-select" id="category" name="category">
+              <option value="Entertainment">Entertainment</option>
+              <option value="Food & Drinks">Food & Drinks</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Health & Fitness">Health & Fitness</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Bills & Utilities">Bills & Utilities</option>
+            </select>
+          </div>
+          <button class="btn btn-outline-success w-100" id="add" type="submit">
+            Add
+          </button>
+        </form>
+      </div>
+      <div class="mt-5">
+        <h2 class="text-center text-secondary">Expenses</h2>
+        <ul class="list-group" id="expenses"></ul>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/expense.js"></script>
+    <script src="/js/leaderboard.js"></script>
+    <script src="/js/cashfreeWebSelf.js"></script>
+  </body>
+-->
+  <body>
+    <div class="container mt-4">
+      <!-- Buy Premium Button -->
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-info" id="buy-premium-btn">
+          Buy Premium Membership
+        </button>
+      </div>
+
+      <!-- Premium Message -->
+      <h2
+        id="premium-msg"
+        class="text-center text-warning mt-3"
+        style="display: none"
+      >
+        🌟 You are a premium user now 🌟
+      </h2>
+
+      <!-- Show Leaderboard Button -->
+      <div class="d-flex justify-content-center mt-3">
+        <button
+          class="btn btn-primary px-4 py-2"
+          id="leaderboard-btn"
+          style="display: none"
+        >
+          Show Leaderboard
+        </button>
+      </div>
+
+      <!-- Leaderboard Container -->
+      <div id="leaderboard-container" class="mt-4" style="display: none">
+        <h3 class="text-center text-success">🏆 Leaderboard</h3>
+        <ul id="leaderboard-list" class="list-group mt-3"></ul>
+      </div>
+
+      <!-- Expense App Title -->
+      <h1 class="text-center text-primary mt-5">Expense Application 2.0</h1>
+
+      <!-- Expense Form -->
+      <div class="card mx-auto mt-3 p-4 shadow" style="max-width: 600px">
+        <form>
+          <div class="mb-3">
+            <label class="form-label" for="amount">Enter amount:</label>
+            <input
+              class="form-control"
+              type="number"
+              id="amount"
+              name="amount"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="description"
+              >Enter description:</label
+            >
+            <input
+              class="form-control"
+              type="text"
+              id="description"
+              name="description"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="category">Category:</label>
+            <select class="form-select" id="category" name="category">
+              <option value="Entertainment">Entertainment</option>
+              <option value="Food & Drinks">Food & Drinks</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Health & Fitness">Health & Fitness</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Bills & Utilities">Bills & Utilities</option>
+            </select>
+          </div>
+          <button class="btn btn-outline-success w-100" id="add" type="submit">
+            Add
+          </button>
+        </form>
+      </div>
+
+      <!-- Expenses List -->
+      <div class="mt-5">
+        <h2 class="text-center text-secondary">Expenses</h2>
+        <ul class="list-group" id="expenses"></ul>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/expense.js"></script>
+    <script src="/js/leaderboard.js"></script>
     <script src="/js/cashfreeWebSelf.js"></script>
   </body>
 </html>

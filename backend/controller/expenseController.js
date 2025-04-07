@@ -20,14 +20,12 @@ const getAllExpense = async (req, res) => {
 const addExpense = async (req, res) => {
   try {
     let { amount, description, category } = req.body;
-    console.log(req.user);
     let newExpense = await Expense.create({
       amount: amount,
       description: description,
       category: category,
       userId: req.user.id,
     });
-    // console.log(newExpense);
     return res
       .status(200)
       .json({ message: "Expense added Successfully", newExpense });
