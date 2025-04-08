@@ -10,7 +10,7 @@ document
           headers: { Authorization: token },
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
 
       const leaderboardList = document.getElementById("leaderboard-list");
       leaderboardList.innerHTML = ""; // Clear old list
@@ -20,7 +20,7 @@ document
 
       response.data.leaderboard.forEach((entry, index) => {
         const listItem = document.createElement("li");
-        listItem.innerText = `${index + 1}. ${entry.user.name} - ₹${
+        listItem.innerText = `${index + 1}. ${entry.name} - ₹${
           entry.totalExpense
         }`;
         leaderboardList.appendChild(listItem);
