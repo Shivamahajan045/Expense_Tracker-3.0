@@ -1,5 +1,6 @@
 const Expense = require("../models/expense");
 const User = require("../models/user");
+const sequelize = require("../utils/database");
 
 const getAllExpense = async (req, res) => {
   try {
@@ -19,22 +20,33 @@ const getAllExpense = async (req, res) => {
 };
 
 const addExpense = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
     let { amount, description, category } = req.body;
-    let newExpense = await Expense.create({
-      amount: amount,
-      description: description,
-      category: category,
-      userId: req.user.id,
-    });
-    await User.increment("totalExpense", {
-      by: amount,
-      where: { id: req.user.id },
-    });
+    amount = parseFloat(amount);
+    let newExpense = await Expense.create(
+      {
+        amount: amount,
+        description: description,
+        category: category,
+        userId: req.user.id,
+      },
+      { transaction: t }
+    );
+
+    const user = await User.findByPk(req.user.id, { transaction: t });
+    const updatedTotal = user.totalExpense + amount;
+    // Update user's totalExpense
+    await User.update(
+      { totalExpense: updatedTotal },
+      { where: { id: req.user.id }, transaction: t }
+    );
+    await t.commit();
     return res
       .status(200)
       .json({ message: "Expense added Successfully", newExpense });
   } catch (error) {
+    await t.rollback();
     return res
       .status(500)
       .json({ message: "Something went wrong!", err: error.message });
@@ -42,30 +54,45 @@ const addExpense = async (req, res) => {
 };
 
 const deleteExpense = async (req, res) => {
+  const t = await sequelize.transaction();
   try {
-    let expenseId = req.params.id;
-    if (!expenseId) {
-      return res.status(400).json({ message: "Expense ID is required" });
-    }
+    const expenseId = req.params.id;
 
-    // Delete the expense if it belongs to the logged-in user
-    const deletedRows = await Expense.destroy({
+    const expense = await Expense.findOne({
       where: { id: expenseId, userId: req.user.id },
+      transaction: t,
     });
 
-    if (deletedRows === 0) {
+    if (!expense) {
+      await t.rollback();
       return res
-        .status(403)
-        .json({ message: "Unauthorized: Cannot delete this expense" });
+        .status(404)
+        .json({ message: "Expense not found or unauthorized" });
     }
 
-    return res
-      .status(200)
-      .json({ message: "Expense deleted successfully", expenseId });
+    const user = await User.findByPk(req.user.id, { transaction: t });
+    const updatedTotal = user.totalExpense - expense.amount;
+
+    await User.update(
+      { totalExpense: updatedTotal },
+      { where: { id: req.user.id }, transaction: t }
+    );
+
+    await Expense.destroy({
+      where: { id: expenseId, userId: req.user.id },
+      transaction: t,
+    });
+
+    await t.commit();
+    return res.status(200).json({
+      message: "Expense deleted successfully",
+      expenseId,
+    });
   } catch (error) {
+    await t.rollback();
     return res
       .status(500)
-      .json({ message: "Something went wrong!", error: error.message });
+      .json({ message: "Something went wrong!", err: error.message });
   }
 };
 

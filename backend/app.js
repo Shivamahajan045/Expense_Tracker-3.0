@@ -46,7 +46,7 @@ app.use("/expense", expenseRouter);
 
 // Database Connection
 sequelize
-  .sync({ alter: true })
+  .sync({ force: false })
   .then(() => {
     console.log("Database connected...");
     app.listen(port, () => {
