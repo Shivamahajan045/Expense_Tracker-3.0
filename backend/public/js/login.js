@@ -26,3 +26,11 @@ loginForm.addEventListener("submit", async (e) => {
     errMsg.textContent = error.response?.data?.message || "Login failed!";
   }
 });
+
+function forgotPassword() {
+  window.location.href = "/forgot.html";
+}
+
+document.getElementById("forgot-password").addEventListener("click", () => {
+  forgotPassword();
+});

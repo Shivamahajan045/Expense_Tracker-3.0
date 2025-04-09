@@ -12,6 +12,7 @@ const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
 const paymentRouter = require("./routes/paymentRoutes");
 const leaderboardRouter = require("./routes/leaderBoard");
+const forgotPasswordRouter = require("./routes/forgotPassword");
 
 app.use(express.json());
 app.use(express.static("public"));
@@ -43,6 +44,7 @@ Expense.belongsTo(User, { foreignKey: "userId" });
 //// API Routes
 app.use("/user", userRouter);
 app.use("/expense", expenseRouter);
+app.use("/password", forgotPasswordRouter);
 
 // Database Connection
 sequelize
