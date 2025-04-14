@@ -60,6 +60,7 @@ const resetPassword = async (req, res) => {
     const resetRequest = await ForgotPasswordRequest.findOne({
       where: { id: requestId },
     });
+    // console.log(resetRequest);
 
     if (!resetRequest || resetRequest.isActive === false) {
       return res
@@ -69,12 +70,27 @@ const resetPassword = async (req, res) => {
 
     res.send(`
       <html>
+      <head>
+      <link rel="stylesheet" href="/css/reset.css"/>
+       <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-...your-integrity"
+            crossorigin="anonymous"
+          />
+      </head>
         <body>
+       
           <form action="/password/updatepassword/${requestId}" method="POST">
-            <label>Enter new password:</label>
-            <input type="password" name="password" required />
-            <button type="submit">Update Password</button>
+          <div class="card shadow p-4" style="width: 25rem;">
+          <h3 class="mb-3 text-center text-primary">Reset Password</h3>
+            <div class="mb-3">
+            <label class="form-label">Enter new password:</label>
+            <input class="form-control" type="password" name="password" required />
+            </div>
+            <button class="btn btn-primary w-100" type="submit">Update Password</button>
           </form>
+          </div>
         </body>
       </html>
     `);

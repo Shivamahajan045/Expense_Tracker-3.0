@@ -1,7 +1,18 @@
 const form = document.querySelector("form");
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = e.target.email.value;
 
-  axios.post("http://localhost:3000/password/forgotpassword", { email });
+  try {
+    const response = await axios.post(
+      "http://localhost:3000/password/forgotpassword",
+      {
+        email,
+      }
+    );
+    alert("Reset link sent to your email!");
+  } catch (err) {
+    console.log("Error: " + err.message);
+    alert("Failed to send reset link.");
+  }
 });

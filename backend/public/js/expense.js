@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const premiumMsg = document.getElementById("premium-msg");
         if (premiumMsg) premiumMsg.style.display = "block";
+        document.getElementById("downloadexpense").style.display = "block";
 
         const leaderboardBtn = document.getElementById("leaderboard-btn");
         if (leaderboardBtn) leaderboardBtn.style.display = "block";
@@ -98,6 +99,28 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error fetching user status", err);
     }
   }
+
+  document.getElementById("downloadexpense").addEventListener("click", () => {
+    console.log("button clicked");
+    const token = localStorage.getItem("token");
+
+  try {
+    const res = await axios.get("http://localhost:3000/expense/download", {
+      headers: { Authorization: token }
+    });
+
+    if (res.data.fileUrl) {
+      const a = document.createElement("a");
+      a.href = res.data.fileUrl;
+      a.download = "expenses.csv";
+      a.click();
+    } else {
+      alert("Download failed. Please try again.");
+    }
+  } catch (err) {
+    console.error("Error downloading expenses", err);
+  }
+  });
 
   fetchAllExpense();
   checkPremiumStatus(); // <-- run this again after payment return
