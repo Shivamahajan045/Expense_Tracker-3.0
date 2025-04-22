@@ -24,19 +24,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  async function fetchAllExpense() {
+  // async function fetchAllExpense() {
+  //   const token = localStorage.getItem("token");
+  //   let response = await axios.get(
+  //     "http://localhost:3000/expense/getAllExpense",
+  //     { headers: { Authorization: token } }
+  //   );
+  //   ul.innerHTML = "";
+  //   response.data.response.forEach((expense) => {
+  //     addExpenseToUI(expense);
+  //   });
+  // }
+
+  let currentPage = 1;
+  const limit = 2;
+
+  async function fetchAllExpense(page = 1) {
     const token = localStorage.getItem("token");
-    let response = await axios.get(
-      "http://localhost:3000/expense/getAllExpense",
-      { headers: { Authorization: token } }
-    );
-    ul.innerHTML = "";
-    response.data.response.forEach((expense) => {
-      addExpenseToUI(expense);
-    });
+
+    try {
+      let response = await axios.get(
+        `http://localhost:3000/expense/paginated?page=${page}&limit=${limit}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
+
+      ul.innerHTML = "";
+      response.data.expenses.forEach((expense) => {
+        addExpenseToUI(expense);
+      });
+
+      setupPagination(response.data.totalPages, response.data.currentPage);
+      currentPage = response.data.currentPage;
+    } catch (error) {
+      console.error("Error fetching expenses:", error);
+    }
   }
 
-  document.addEventListener("DOMContentLoaded", fetchAllExpense);
   function addExpenseToUI(expense) {
     let li = document.createElement("li");
     li.className =
@@ -100,27 +125,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  document.getElementById("downloadexpense").addEventListener("click", () => {
-    console.log("button clicked");
-    const token = localStorage.getItem("token");
+  document
+    .getElementById("downloadexpense")
+    .addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
 
-  try {
-    const res = await axios.get("http://localhost:3000/expense/download", {
-      headers: { Authorization: token }
+      try {
+        const res = await axios.get("http://localhost:3000/expense/download", {
+          headers: { Authorization: token },
+        });
+
+        if (res.data.fileUrl) {
+          const a = document.createElement("a");
+          a.href = res.data.fileUrl;
+          a.download = "expenses.c";
+          a.click();
+        } else {
+          sv;
+          alert("Download failed. Please try again.");
+        }
+      } catch (err) {
+        console.error("Error downloading expenses", err);
+      }
     });
 
-    if (res.data.fileUrl) {
-      const a = document.createElement("a");
-      a.href = res.data.fileUrl;
-      a.download = "expenses.csv";
-      a.click();
-    } else {
-      alert("Download failed. Please try again.");
+  function setupPagination(totalPages, currentPage) {
+    const pagination = document.getElementById("pagination-buttons");
+    pagination.innerHTML = "";
+
+    // Previous button
+    const prevBtn = document.createElement("button");
+    prevBtn.innerText = "Previous";
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.className = "btn btn-outline-primary btn-sm me-1";
+    prevBtn.onclick = () => fetchAllExpense(currentPage - 1);
+    pagination.appendChild(prevBtn);
+
+    // Page number buttons
+    for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement("button");
+      pageBtn.innerText = i;
+      pageBtn.className = `btn btn-sm me-1 ${
+        i === currentPage ? "btn-primary" : "btn-outline-secondary"
+      }`;
+      pageBtn.disabled = i === currentPage;
+      pageBtn.onclick = () => fetchAllExpense(i);
+      pagination.appendChild(pageBtn);
     }
-  } catch (err) {
-    console.error("Error downloading expenses", err);
+
+    // Next button
+    const nextBtn = document.createElement("button");
+    nextBtn.innerText = "Next";
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.className = "btn btn-outline-primary btn-sm";
+    nextBtn.onclick = () => fetchAllExpense(currentPage + 1);
+    pagination.appendChild(nextBtn);
   }
-  });
 
   fetchAllExpense();
   checkPremiumStatus(); // <-- run this again after payment return

@@ -47,3 +47,170 @@ input {
     margin-top: 10px;
   }
 }
+
+/* ------ */
+
+:root {
+  --primary: #4b6cb7;
+  --secondary: #182848;
+  --accent: #fbc531;
+  --light-bg: #f5f6fa;
+  --text-color: #2f3640;
+  --border-color: #dcdde1;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: var(--light-bg);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: var(--primary);
+}
+
+h2.text-warning {
+  color: var(--accent);
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+
+#buy-premium-btn {
+  background: var(--primary);
+  color: white;
+  float: right;
+  margin-bottom: 20px;
+}
+
+#buy-premium-btn:hover {
+  background: var(--secondary);
+}
+
+#premium-msg {
+  display: none;
+  margin-top: 15px;
+  font-size: 1.3rem;
+}
+
+#downloadexpense {
+  display: none;
+  background: var(--accent);
+  margin: 10px auto;
+  display: block;
+  color: #000;
+}
+
+#downloadexpense:hover {
+  background: #f1c40f;
+}
+
+#leaderboard-btn {
+  display: none;
+  background: var(--primary);
+  color: white;
+  margin: 10px auto;
+  display: block;
+}
+
+#leaderboard-btn:hover {
+  background: var(--secondary);
+}
+
+#leaderboard-container {
+  display: none;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#leaderboard-list {
+  list-style: none;
+  padding: 0;
+}
+
+#leaderboard-list li {
+  font-size: 1rem;
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  margin-top: 20px;
+}
+
+.form-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary);
+}
+
+.btn-submit {
+  width: 100%;
+  background: #27ae60;
+  color: white;
+}
+
+.btn-submit:hover {
+  background: #219150;
+}
+
+#expenses {
+  margin-top: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+#expenses li {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
