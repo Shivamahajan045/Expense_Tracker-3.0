@@ -37,7 +37,17 @@ document.addEventListener("DOMContentLoaded", () => {
   // }
 
   let currentPage = 1;
-  const limit = 2;
+  const limitSelector = document.getElementById("expense-limit");
+
+  // Get limit from localStorage or fallback to 10
+  let limit = parseInt(localStorage.getItem("expenseLimit")) || 10;
+  limitSelector.value = limit;
+
+  limitSelector.addEventListener("change", () => {
+    limit = parseInt(limitSelector.value);
+    localStorage.setItem("expenseLimit", limit);
+    fetchAllExpense(1); // Reset to first page when limit changes
+  });
 
   async function fetchAllExpense(page = 1) {
     const token = localStorage.getItem("token");
