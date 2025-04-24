@@ -1,0 +1,9 @@
+{
+  "env": {
+    "DB_NAME": "expense",
+    "DB_USER": "root",
+    "DB_PASSWORD": "Shivu@123",
+    "DB_HOST": "localhost",
+    "DB_DIALECT": "mysql"
+  }
+}
