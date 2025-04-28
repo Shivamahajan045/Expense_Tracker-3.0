@@ -13,8 +13,9 @@
   "description": "",
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.4",
+    "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
-    "cashfree-pg": "^5.0.3",
+    "cashfree-pg": "^4.3.10",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

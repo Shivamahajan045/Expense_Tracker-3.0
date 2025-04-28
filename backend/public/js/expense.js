@@ -145,13 +145,12 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: { Authorization: token },
         });
 
-        if (res.data.fileUrl) {
+        if (res.data.fileURL) {
           const a = document.createElement("a");
-          a.href = res.data.fileUrl;
-          a.download = "expenses.c";
+          a.href = res.data.fileURL;
+          a.download = "expenses.csv";
           a.click();
         } else {
-          sv;
           alert("Download failed. Please try again.");
         }
       } catch (err) {

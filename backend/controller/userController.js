@@ -7,7 +7,6 @@ const createUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Check if any field is missing
     if (!username || !email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -48,7 +47,6 @@ const getUser = async (req, res) => {
         .json({ message: "User not found! Please sign up." });
     }
 
-    // Correct async/await bcrypt.compare usage
     const result = await bcrypt.compare(password, user.password);
     if (!result) {
       return res.status(401).json({ message: "Incorrect password!" });

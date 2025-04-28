@@ -1,5 +1,5 @@
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
 const app = express();
 const port = process.env.port || 3000;
 const path = require("path");
@@ -10,6 +10,7 @@ const sequelize = require("./utils/database");
 
 const User = require("./models/user");
 const Expense = require("./models/expense");
+const DownloadedFile = require("./models/downloadedfile");
 
 const userRouter = require("./routes/userRoutes");
 const expenseRouter = require("./routes/expenseRoutes");
@@ -57,14 +58,12 @@ app.get("/expense", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "expense.html"));
 });
 
-app.get("/error", (req, res, next) => {
-  const error = new Error("This is a test error!");
-  next(error);
-});
-
 //  relationships
 User.hasMany(Expense, { foreignKey: "userId", onDelete: "CASCADE" });
 Expense.belongsTo(User, { foreignKey: "userId" });
+
+User.hasMany(DownloadedFile);
+DownloadedFile.belongsTo(User);
 
 //// API Routes
 app.use("/user", userRouter);

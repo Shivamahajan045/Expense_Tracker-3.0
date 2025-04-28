@@ -1,32 +1,51 @@
 const Expense = require("../models/expense");
-const fs = require("fs");
-const path = require("path");
+const DownloadedFile = require("../models/downloadedfile");
+const UserServices = require("../services/userservices");
+const S3Service = require("../services/S3services");
+require("dotenv").config();
 
-exports.downloadExpenses = async (req, res) => {
+const downloadExpenses = async (req, res) => {
   try {
-    const expenses = await Expense.findAll({ where: { userId: req.user.id } });
+    const expenses = await UserServices.getExpenses(req);
+    const stringifiedExpenses = JSON.stringify(expenses);
 
-    let csv = "Amount,Description,Category,Date\n";
+    const userId = req.user.id;
+    const fileName = `Expense${userId}/${new Date()}.txt`;
+    const fileURL = await S3Service.uploadToS3(stringifiedExpenses, fileName);
 
-    expenses.forEach((exp) => {
-      csv += `${exp.amount},${exp.description},${exp.category},${exp.createdAt}\n`;
+    // Save download history
+    await DownloadedFile.create({
+      fileUrl: fileURL,
+      userId: userId,
     });
 
-    const filename = `expenses_${req.user.id}_${Date.now()}.csv`;
-    const filepath = path.join(__dirname, "..", "downloads", filename);
-
-    // ✅ Create downloads folder if not exist
-    if (!fs.existsSync(path.dirname(filepath))) {
-      fs.mkdirSync(path.dirname(filepath), { recursive: true });
-    }
-
-    fs.writeFileSync(filepath, csv);
-
-    // ✅ Send public URL (e.g., localhost:3000/downloads/...)
-    const fileUrl = `http://localhost:3000/downloads/${filename}`;
-    return res.status(200).json({ fileUrl });
+    res.status(200).json({ fileURL, success: true });
   } catch (err) {
-    console.error("Error generating download:", err);
-    res.status(500).json({ message: "Failed to download expenses." });
+    res.status(500).json({
+      fileURL: "",
+      success: false,
+      message: "Failed to download expenses.",
+      err: err,
+    });
   }
+};
+
+const getDownloadedFiles = async (req, res) => {
+  try {
+    const files = await req.user.getDownloadedFiles({
+      order: [["downloadedAt", "DESC"]],
+    });
+
+    res.status(200).json({ success: true, files });
+  } catch (err) {
+    console.error("Error fetching downloaded files:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to fetch history." });
+  }
+};
+
+module.exports = {
+  downloadExpenses,
+  getDownloadedFiles,
 };
