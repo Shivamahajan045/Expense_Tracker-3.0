@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/signup.css" />
+    <style>
+      body {
+        background-color: #9ca3af;
+      }
+      .form-container {
+        background-color: rgba(0, 0, 0, 0.85);
+        color: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 400px;
+      }
+    </style>
+  </head>
+  <body class="d-flex align-items-center justify-content-center min-vh-100">
+    <form class="form-container shadow-lg signup-form">
+      <h1 class="text-center fw-bold mb-4">Sign Up</h1>
+
+      <div class="mb-3">
+        <label for="username" class="form-label">Enter your name:</label>
+        <input
+          type="text"
+          class="form-control bg-dark text-white border-secondary"
+          id="username"
+          name="username"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Enter your email:</label>
+        <input
+          type="email"
+          class="form-control bg-dark text-white border-secondary"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label">Enter your password:</label>
+        <input
+          type="password"
+          class="form-control bg-dark text-white border-secondary"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <button type="submit" id="signup" class="btn btn-danger w-100 mb-3">
+        Sign Up
+      </button>
+
+      <p class="text-center">
+        <a href="/login.html" class="text-info text-decoration-underline">
+          Already have an account? Login here
+        </a>
+      </p>
+    </form>
+
+    <!-- Bootstrap Bundle & Axios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/signup.js"></script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-const Expense = require("../models/expenseRoutes");
+const Expense = require("../models/expense");
 const User = require("../models/user");
 const { Sequelize } = require("sequelize");
 

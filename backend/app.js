@@ -9,12 +9,12 @@ const cors = require("cors");
 const sequelize = require("./utils/database");
 
 const User = require("./models/user");
-const Expense = require("./models/expenseRoutes");
+const Expense = require("./models/expense");
 const DownloadedFile = require("./models/downloadedfile");
 
-const userRouter = require("./routes/userRoutes");
+const userRouter = require("./routes/user");
 const expenseRouter = require("./routes/expense");
-const paymentRouter = require("./routes/paymentRoutes");
+const paymentRouter = require("./routes/payment");
 const leaderboardRouter = require("./routes/leaderBoard");
 const forgotPasswordRouter = require("./routes/forgotPassword");
 const downloadRouter = require("./routes/download");
@@ -45,7 +45,7 @@ app.use("/expense", downloadRouter);
 app.use("/", paginationRouter);
 //Root path
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "index.html"));
+  res.sendFile(path.join(__dirname, "views", "signup.html"));
 });
 
 //login route

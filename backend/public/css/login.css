@@ -1,0 +1,44 @@
+body {
+  background-color: #9ca3af; /* Tailwind's bg-gray-400 */
+}
+
+.login-form {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 1rem;
+}
+
+.form-control {
+  background-color: #374151; /* Tailwind's bg-gray-700 */
+  color: white;
+  border: none;
+}
+
+.form-control::placeholder {
+  color: #cbd5e1; /* light placeholder */
+}
+
+.form-control:focus {
+  box-shadow: none;
+  background-color: #4b5563;
+}
+
+.btn-login {
+  background-color: #b91c1c; /* Tailwind bg-red-700 */
+  border: none;
+}
+
+.btn-login:hover {
+  background-color: #991b1b; /* Tailwind bg-red-800 */
+}
+
+.form-text-link:hover {
+  text-decoration: underline;
+}
+
+.btn-link-custom {
+  color: #facc15; /* Tailwind's text-yellow-300 */
+}
+
+.btn-link-custom:hover {
+  text-decoration: underline;
+}

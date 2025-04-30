@@ -1,4 +1,4 @@
-const Expense = require("../models/expenseRoutes");
+const Expense = require("../models/expense");
 const DownloadedFile = require("../models/downloadedfile");
 const UserServices = require("../services/userservices");
 const S3Service = require("../services/S3services");
