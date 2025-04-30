@@ -9,11 +9,11 @@ const cors = require("cors");
 const sequelize = require("./utils/database");
 
 const User = require("./models/user");
-const Expense = require("./models/expense");
+const Expense = require("./models/expenseRoutes");
 const DownloadedFile = require("./models/downloadedfile");
 
 const userRouter = require("./routes/userRoutes");
-const expenseRouter = require("./routes/expenseRoutes");
+const expenseRouter = require("./routes/expense");
 const paymentRouter = require("./routes/paymentRoutes");
 const leaderboardRouter = require("./routes/leaderBoard");
 const forgotPasswordRouter = require("./routes/forgotPassword");
@@ -92,6 +92,7 @@ Stack Trace: ${err.stack}
     .status(500)
     .json({ message: "Something went wrong!", error: err.message });
 });
+
 // Database Connection
 sequelize
   .sync({ force: false })

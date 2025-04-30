@@ -14,39 +14,25 @@ document.addEventListener("DOMContentLoaded", () => {
       let response = await axios.post(
         "http://localhost:3000/expense/addExpense",
         { amount, description, category },
-        { headers: { Authorization: token } } //  Send token in headers
+        { headers: { Authorization: token } }
       );
-      // console.log("Expense Added:", response.data);
 
-      fetchAllExpense(); // Refresh expenses after adding new one
+      fetchAllExpense();
     } catch (error) {
       console.error("Error Adding Expense:", error.response.data);
     }
   });
 
-  // async function fetchAllExpense() {
-  //   const token = localStorage.getItem("token");
-  //   let response = await axios.get(
-  //     "http://localhost:3000/expense/getAllExpense",
-  //     { headers: { Authorization: token } }
-  //   );
-  //   ul.innerHTML = "";
-  //   response.data.response.forEach((expense) => {
-  //     addExpenseToUI(expense);
-  //   });
-  // }
-
   let currentPage = 1;
   const limitSelector = document.getElementById("expense-limit");
 
-  // Get limit from localStorage or fallback to 10
   let limit = parseInt(localStorage.getItem("expenseLimit")) || 10;
   limitSelector.value = limit;
 
   limitSelector.addEventListener("change", () => {
     limit = parseInt(limitSelector.value);
     localStorage.setItem("expenseLimit", limit);
-    fetchAllExpense(1); // Reset to first page when limit changes
+    fetchAllExpense(1);
   });
 
   async function fetchAllExpense(page = 1) {

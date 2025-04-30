@@ -1,4 +1,4 @@
-const Expense = require("../models/expense");
+const Expense = require("../models/expenseRoutes");
 const User = require("../models/user");
 const sequelize = require("../utils/database");
 
@@ -11,7 +11,6 @@ const getAllExpense = async (req, res) => {
     return res
       .status(200)
       .json({ message: "Expense Fetched successfully", response });
-    // console.log(response);
   } catch (error) {
     return res
       .status(500)

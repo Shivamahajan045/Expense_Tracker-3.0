@@ -10,12 +10,10 @@ document
           headers: { Authorization: token },
         }
       );
-      // console.log(response.data);
 
       const leaderboardList = document.getElementById("leaderboard-list");
       leaderboardList.innerHTML = ""; // Clear old list
 
-      // 🔥 Make container visible
       document.getElementById("leaderboard-container").style.display = "block";
 
       response.data.leaderboard.forEach((entry, index) => {

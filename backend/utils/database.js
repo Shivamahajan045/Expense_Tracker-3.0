@@ -12,4 +12,5 @@ const sequelize = new Sequelize(
   }
 );
 
+// console.log(process.nextTi)
 module.exports = sequelize;

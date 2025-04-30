@@ -1,5 +1,5 @@
 // GET /expense/paginated?page=1&limit=2
-const Expense = require("../models/expense");
+const Expense = require("../models/expenseRoutes");
 const getPaginatedExpenses = async (req, res) => {
   const page = +req.query.page || 1;
   const limit = +req.query.limit || 2;
