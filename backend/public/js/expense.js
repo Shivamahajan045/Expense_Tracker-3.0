@@ -97,6 +97,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // async function checkPremiumStatus() {
+  //   const token = localStorage.getItem("token");
+
+  //   try {
+  //     const res = await axios.get("http://localhost:3000/user/status", {
+  //       headers: { Authorization: token },
+  //     });
+
+  //     if (res.data.isPremium) {
+  //       const banner = document.getElementById("premium-banner");
+  //       if (banner) banner.style.display = "block";
+
+  //       const premiumMsg = document.getElementById("premium-msg");
+  //       if (premiumMsg) premiumMsg.style.display = "block";
+  //       document.getElementById("downloadexpense").style.display = "block";
+
+  //       const leaderboardBtn = document.getElementById("leaderboard-btn");
+  //       if (leaderboardBtn) leaderboardBtn.style.display = "block";
+  //     }
+  //   } catch (err) {
+  //     console.error("Error fetching user status", err);
+  //   }
+  // }
+
   async function checkPremiumStatus() {
     const token = localStorage.getItem("token");
 
@@ -106,15 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (res.data.isPremium) {
-        const banner = document.getElementById("premium-banner");
-        if (banner) banner.style.display = "block";
-
-        const premiumMsg = document.getElementById("premium-msg");
-        if (premiumMsg) premiumMsg.style.display = "block";
+        document.getElementById("premium-msg").style.display = "block";
         document.getElementById("downloadexpense").style.display = "block";
-
-        const leaderboardBtn = document.getElementById("leaderboard-btn");
-        if (leaderboardBtn) leaderboardBtn.style.display = "block";
+        document.getElementById("leaderboard-btn").style.display = "block";
+      } else {
+        document.getElementById("premium-msg").style.display = "none";
+        document.getElementById("downloadexpense").style.display = "none";
+        document.getElementById("leaderboard-btn").style.display = "none";
       }
     } catch (err) {
       console.error("Error fetching user status", err);
@@ -176,6 +198,29 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.onclick = () => fetchAllExpense(currentPage + 1);
     pagination.appendChild(nextBtn);
   }
+
+  document
+    .getElementById("buy-premium-btn")
+    .addEventListener("click", async () => {
+      const token = localStorage.getItem("token");
+
+      try {
+        let res = await axios.post(
+          "http://localhost:3000/user/buyPremium",
+          {},
+          {
+            headers: { Authorization: token },
+          }
+        );
+
+        if (res.data.success) {
+          alert("You are now a premium user!");
+          checkPremiumStatus();
+        }
+      } catch (err) {
+        console.error("Error upgrading to premium", err);
+      }
+    });
 
   fetchAllExpense();
   checkPremiumStatus(); // <-- run this again after payment return
