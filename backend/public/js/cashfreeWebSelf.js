@@ -8,7 +8,7 @@ document
   .addEventListener("click", async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/payment/create-order",
+        `${window.BASE_URL}/payment/create-order`,
 
         {
           amount: 10000,

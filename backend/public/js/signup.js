@@ -14,7 +14,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     let response = await axios.post(
-      "http://localhost:3000/user/signup",
+      `${window.BASE_URL}/user/signup`,
       signUpData
     );
     console.log("Response Message:", response.data.message);

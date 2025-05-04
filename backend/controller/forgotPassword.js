@@ -4,7 +4,7 @@ const ForgotPasswordRequest = require("../models/forgotPasswordRequest");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-
+const BASE_URL = process.env.BASE_URL;
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
@@ -42,7 +42,7 @@ const forgotPassword = async (req, res) => {
       to: recievers,
       subject: "Reset your password",
       htmlContent: `<p>Click the link below to reset your password:</p>
-        <a href="http://localhost:3000/password/resetpassword/${id}">Reset Password</a>`,
+        <a href="${BASE_URL}/password/resetpassword/${id}">Reset Password</a>`,
     });
     res.status(200).json({ message: "Reset link sent to email!" });
   } catch (error) {

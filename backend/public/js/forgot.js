@@ -5,7 +5,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const response = await axios.post(
-      "http://localhost:3000/password/forgotpassword",
+      `${window.BASE_URL}/password/forgotpassword`,
       {
         email,
       }

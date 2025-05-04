@@ -5,7 +5,7 @@ document
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:3000/premium/leaderboard",
+        `${window.BASE_URL}/premium/leaderboard`,
         {
           headers: { Authorization: token },
         }

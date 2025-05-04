@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       let response = await axios.post(
-        "http://localhost:3000/expense/addExpense",
+        `${window.BASE_URL}/expense/addExpense`,
         { amount, description, category },
         { headers: { Authorization: token } }
       );
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       let response = await axios.get(
-        `http://localhost:3000/expense/paginated?page=${page}&limit=${limit}`,
+        `${window.BASE_URL}/expense/paginated?page=${page}&limit=${limit}`,
         {
           headers: { Authorization: token },
         }
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const token = localStorage.getItem("token");
       let response = await axios.delete(
-        `http://localhost:3000/expense/delete/${id}`,
+        `${window.BASE_URL}/expense/delete/${id}`,
         { headers: { Authorization: token } }
       );
       fetchAllExpense();
@@ -97,35 +97,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // async function checkPremiumStatus() {
-  //   const token = localStorage.getItem("token");
-
-  //   try {
-  //     const res = await axios.get("http://localhost:3000/user/status", {
-  //       headers: { Authorization: token },
-  //     });
-
-  //     if (res.data.isPremium) {
-  //       const banner = document.getElementById("premium-banner");
-  //       if (banner) banner.style.display = "block";
-
-  //       const premiumMsg = document.getElementById("premium-msg");
-  //       if (premiumMsg) premiumMsg.style.display = "block";
-  //       document.getElementById("downloadexpense").style.display = "block";
-
-  //       const leaderboardBtn = document.getElementById("leaderboard-btn");
-  //       if (leaderboardBtn) leaderboardBtn.style.display = "block";
-  //     }
-  //   } catch (err) {
-  //     console.error("Error fetching user status", err);
-  //   }
-  // }
-
   async function checkPremiumStatus() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.get("http://localhost:3000/user/status", {
+      const res = await axios.get(`${window.BASE_URL}/user/status`, {
         headers: { Authorization: token },
       });
 
@@ -149,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await axios.get("http://localhost:3000/expense/download", {
+        const res = await axios.get(`${window.BASE_URL}/expense/download`, {
           headers: { Authorization: token },
         });
 
@@ -206,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         let res = await axios.post(
-          "http://localhost:3000/user/buyPremium",
+          `${window.BASE_URL}/user/buyPremium`,
           {},
           {
             headers: { Authorization: token },

@@ -4,6 +4,7 @@ const User = require("../models/user");
 Cashfree.XClientId = process.env.CASHFREE_KEY_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_KEY_SECRET;
 Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+const BASE_URL = process.env.BASE_URL;
 
 exports.createOrder = async (req, res) => {
   try {
@@ -22,7 +23,7 @@ exports.createOrder = async (req, res) => {
         customer_phone: "9999999999",
       },
       order_meta: {
-        return_url: `http://localhost:3000/payment/payment-status/${orderId}?token=${req.headers.authorization}`,
+        return_url: `${BASE_URL}/payment/payment-status/${orderId}?token=${req.headers.authorization}`,
         payment_methods: "cc,upi,nb",
       },
       order_expiry_time: formattedExpiryDate,
