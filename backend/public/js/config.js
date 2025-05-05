@@ -5,6 +5,6 @@ const isLocalhost =
 
 const BASE_URL = isLocalhost
   ? "http://localhost:3000"
-  : "http://13.232.163.227:3000";
+  : "http://13.201.225.108:3000";
 
 window.BASE_URL = BASE_URL;
