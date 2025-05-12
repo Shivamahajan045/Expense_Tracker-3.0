@@ -60,7 +60,6 @@ const resetPassword = async (req, res) => {
     const resetRequest = await ForgotPasswordRequest.findOne({
       where: { id: requestId },
     });
-    // console.log(resetRequest);
 
     if (!resetRequest || resetRequest.isActive === false) {
       return res
