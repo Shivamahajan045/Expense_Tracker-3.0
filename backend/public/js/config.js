@@ -5,6 +5,6 @@ const isLocalhost =
 
 const BASE_URL = isLocalhost
   ? "http://localhost:3000"
-  : "http://15.206.89.40:3000";
+  : "http://52.66.66.94:3000"; //remove port once using nginx
 
 window.BASE_URL = BASE_URL;
