@@ -17,7 +17,7 @@ form.addEventListener("submit", async (e) => {
       `${window.BASE_URL}/user/signup`,
       signUpData
     );
-    console.log("Response Message:", response.data.message);
+    console.log(response);
     errMsg.textContent = "User registered successfully!";
     errMsg.classList.remove("text-red-500");
     errMsg.classList.add("text-green-500");
