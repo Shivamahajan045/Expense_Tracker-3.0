@@ -13,9 +13,7 @@ loginForm.addEventListener("submit", async (e) => {
       email,
       password,
     });
-    console.log(response);
     const token = response.data.token;
-    console.log(token);
     localStorage.setItem("token", token);
     errMsg.textContent = "Login successful!";
     errMsg.classList.remove("text-red-500");
