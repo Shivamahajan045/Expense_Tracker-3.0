@@ -98,6 +98,7 @@ sequelize
   .sync({ force: false })
   .then(() => {
     console.log("Database connected...");
+    console.log("added new comment-");
     app.listen(port, "0.0.0.0", () => {
       console.log(`Server is listening to port: ${port}...`);
     });
