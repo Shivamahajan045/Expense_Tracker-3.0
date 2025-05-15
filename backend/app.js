@@ -87,7 +87,6 @@ Stack Trace: ${err.stack}
       console.error("Failed to write to error.log", fsErr);
     }
   });
-  console.log("access log recieved");
 
   res
     .status(500)
